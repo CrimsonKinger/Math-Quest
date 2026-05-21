@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#6C63FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Математический квест — обучение, формулы и интерактивные задачи по алгебре и математике.">
+  <title>🧮 Математический квест</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <h1>🧮 Математический квест</h1>
+      <span class="version-badge">v2.9</span>
+    </div>
+    <div class="score-pill">🏆 <span id="globalScore">0</span></div>
+  </header>
+
+  <nav class="nav" id="mainNav">
+    <button class="nav-btn active" data-target="home">🏠 Главная</button>
+    <button class="nav-btn" data-target="tutorial">📖 Обучение</button>
+    <button class="nav-btn" data-target="linear">📏 Линейные</button>
+    <button class="nav-btn" data-target="quadratic">📈 Квадратные</button>
+    <button class="nav-btn" data-target="simplify">⚖️ Упрощение</button>
+    <button class="nav-btn" data-target="speed">⏱️ Скорость</button>
+  </nav>
+
+  <main id="mainContent">
+    <section id="screen-home" class="screen active">
+      <div class="hero-card"><h2>Добро пожаловать! 🎓</h2><p>Пройди пошаговое обучение, запомни формулы, а затем решай уравнения и набирай очки!</p><div class="stats-row"><div class="stat-chip"><span class="val" id="statSolved">0</span><span class="lbl">Решено</span></div><div class="stat-chip"><span class="val" id="statAccuracy">0%</span><span class="lbl">Точность</span></div><div class="stat-chip"><span class="val" id="statBestStreak">0</span><span class="lbl">Рек. серия</span></div></div></div>
+      <h3 class="section-title">Режимы:</h3>
+      <div class="mode-grid"><div class="mode-card" data-goto="linear"><div class="icon">📏</div><div class="title">Линейные</div><div class="desc">ax + b = c</div></div><div class="mode-card" data-goto="quadratic"><div class="icon">📈</div><div class="title">Квадратные</div><div class="desc">ax² + bx + c = 0</div></div><div class="mode-card" data-goto="simplify"><div class="icon">⚖️</div><div class="title">Упрощение</div><div class="desc">Сокращай выражения</div></div><div class="mode-card" data-goto="speed"><div class="icon">⏱️</div><div class="title">Скорость</div><div class="desc">60 сек. Блесни!</div></div></div>
+    </section>
+
+    <section id="screen-tutorial" class="screen"><div class="tutorial-card"><div class="tutorial-header"><h2>📖 Математика: Разбор по шагам</h2><span class="tutorial-progress">Шаг <span id="tutStep">1</span> из <span id="tutTotal">5</span></span></div><div class="tutorial-content" id="tutContent"></div><div class="tutorial-nav"><button class="btn btn-secondary" id="tutPrev">← Назад</button><button class="btn btn-primary" id="tutNext">Далее →</button><button class="btn btn-gold" id="tutFinish" style="display:none;">🚀 Начать практику</button></div></div></section>
+
+    <section id="screen-linear" class="screen"><div class="game-card"><div class="card-header-row"><h2>📏 Линейные уравнения</h2><button class="hint-btn" id="hintLinear" title="Показать подсказку">💡</button></div><p>Найди <code>x</code> в уравнении:</p><div class="eq-display" id="linearEq">5x + 3 = 18</div><div class="hint-box" id="hintBoxLinear" style="display:none;"><div class="hint-title">Формула решения</div><div class="formula-block">x = (c - b) / a</div><p class="hint-desc">Перенеси свободный член <code>b</code> в правую часть, изменив знак. Затем раздели обе части на коэффициент при <code>x</code>.</p></div><div class="input-wrap"><input type="text" id="linearInput" placeholder="x = ?" inputmode="numeric" enterkeyhint="done" autocomplete="off"><button class="btn btn-primary" id="linearSubmit">Проверить</button></div><div id="linearFeedback" class="feedback" style="display:none;"></div><div class="divider"></div><div class="stats-row"><div class="stat-chip"><span class="val" id="linearCorrect">0</span><span class="lbl">Верно</span></div><div class="stat-chip"><span class="val" id="linearTotal">0</span><span class="lbl">Всего</span></div><div class="stat-chip"><span class="val" id="linearDiff">Легко</span><span class="lbl">Сложность</span></div></div></div></section>
+
+    <section id="screen-quadratic" class="screen"><div class="game-card"><div class="card-header-row"><h2>📈 Квадратные уравнения</h2><button class="hint-btn" id="hintQuad" title="Показать подсказку">💡</button></div><p>Найди корни <code>ax² + bx + c = 0</code>:</p><div class="eq-display" id="quadEq">x² - 5x + 6 = 0</div><div class="hint-box" id="hintBoxQuad" style="display:none;"><div class="hint-title">Дискриминант & Корни</div><div class="formula-block">D = b² - 4ac<br>x₁,₂ = (-b ± √D) / 2a</div><p class="hint-desc">Если <code>D > 0</code> → 2 корня, <code>D = 0</code> → 1 корень, <code>D < 0</code> → корней нет.</p></div><div class="input-grid"><div class="input-wrap"><input type="text" id="quadX1" placeholder="x₁" inputmode="numeric" enterkeyhint="next" class="quad-input" autocomplete="off"></div><div class="input-wrap"><input type="text" id="quadX2" placeholder="x₂" inputmode="numeric" enterkeyhint="done" class="quad-input" autocomplete="off"></div><button class="btn btn-primary full-width" id="quadSubmit">Проверить</button></div><div id="quadFeedback" class="feedback" style="display:none;"></div><div class="divider"></div><div class="stats-row"><div class="stat-chip"><span class="val" id="quadCorrect">0</span><span class="lbl">Верно</span></div><div class="stat-chip"><span class="val" id="quadTotal">0</span><span class="lbl">Всего</span></div><div class="stat-chip"><span class="val" id="quadDiscr">D ≥ 0</span><span class="lbl">Дискриминант</span></div></div></div></section>
+
+    <section id="screen-simplify" class="screen"><div class="game-card"><div class="card-header-row"><h2>⚖️ Упрощение выражений</h2><button class="hint-btn" id="hintSimp" title="Показать подсказку">💡</button></div><p>Выбери верный упрощённый вариант:</p><div class="eq-display" id="simpExpr">3x + 2x - 5 + 7</div><div class="hint-box" id="hintBoxSimp" style="display:none;"><div class="hint-title">Правило приведения подобных</div><div class="formula-block">(k₁x + k₂x) + (n₁ ± n₂) = (k₁+k₂)x + (n₁±n₂)</div><p class="hint-desc">Складывай коэффициенты при <code>x</code> между собой. Свободные числа складывай отдельно.</p></div><div class="options-grid" id="simpOptions"></div><div id="simpFeedback" class="feedback" style="display:none;"></div><div class="divider"></div><div class="stats-row"><div class="stat-chip"><span class="val" id="simpCorrect">0</span><span class="lbl">Верно</span></div><div class="stat-chip"><span class="val" id="simpTotal">0</span><span class="lbl">Всего</span></div><div class="stat-chip"><span class="val" id="simpStreak">0</span><span class="lbl">Серия</span></div></div></div></section>
+
+    <section id="screen-speed" class="screen"><div class="game-card"><div class="card-header-row"><h2>⏱️ Скоростной раунд</h2><button class="hint-btn" id="hintSpeed" title="Показать подсказку">💡</button></div><p>60 секунд. Решай максимально быстро!</p><div class="hint-box" id="hintBoxSpeed" style="display:none;"><div class="hint-title">Стратегия победы</div><div class="formula-block">Очки = 10 + (серия × 2)</div><p class="hint-desc">Ошибки сбрасывают серию. Не спеши. Разбей в уме: ax = c-b → x = (c-b)/a.</p></div><div class="timer-wrap"><div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div><span id="speedTime" class="timer-text">60</span></div><div class="eq-display" id="speedEq">x + 5 = 12</div><div class="options-grid" id="speedOptions"></div><div id="speedFeedback" class="feedback" style="display:none;"></div><div class="divider"></div><div class="stats-row"><div class="stat-chip"><span class="val" id="speedScore">0</span><span class="lbl">Очки</span></div><div class="stat-chip"><span class="val" id="speedTimeStat">0</span><span class="lbl">Время</span></div><div class="stat-chip"><span class="val" id="speedStreak">0</span><span class="lbl">Серия</span></div></div><div class="speed-controls"><button class="btn btn-gold full-width mt-2" id="btnStartSpeed">🚀 Начать</button><button class="btn btn-secondary full-width mt-2 hidden" id="btnFinishSpeed">⏹️ Завершить</button></div></div></section>
+  </main>
+
+  <div id="welcomeModal" class="modal-overlay">
+    <div class="modal-card">
+      <h2 class="modal-title">👋 Добро пожаловать!</h2>
+      <p class="modal-text">Математика стала игрой. Хочешь разобрать формулы и примеры перед стартом?</p>
+      <div class="modal-buttons">
+        <button class="modal-btn btn-primary" id="welcomeStart">📖 Пройти обучение</button>
+        <button class="modal-btn btn-secondary" id="welcomeSkip">⏭️ Пропустить</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="speedResultModal" class="modal-overlay hidden"><div class="modal-card"><h2 class="modal-title">⏱️ Раунд завершён!</h2><div class="result-stats"><div class="result-stat"><span class="val" id="resultScore">0</span><span class="lbl">Очки</span></div><div class="result-stat"><span class="val" id="resultStreak">0</span><span class="lbl">Макс. серия</span></div><div class="result-stat"><span class="val" id="resultTime">0с</span><span class="lbl">Время</span></div></div><div class="modal-buttons"><button class="modal-btn btn-primary" id="btnSpeedPlayAgain">🔄 Играть снова</button><button class="modal-btn btn-secondary" id="btnSpeedClose">🏠 На главную</button></div></div></div>
+
+  <button id="scratchpadToggle" class="scratch-toggle" title="Открыть черновик">📝 Черновик</button>
+
+  <div id="scratchpadPanel" class="scratchpad closed">
+    <div class="scratchpad-header">
+      <span>📝 Черновик</span>
+      <div class="header-actions">
+        <button id="scratchpadClear" class="scratch-btn" title="Очистить">🗑️</button>
+        <button id="scratchpadClose" class="scratch-btn" title="Закрыть">✖</button>
+      </div>
+    </div>
+    <div id="scratchpadHint" class="scratchpad-hint">🖱️ ЛКМ — рисовать | ПКМ — ластик</div>
+    <canvas id="scratchCanvas"></canvas>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
